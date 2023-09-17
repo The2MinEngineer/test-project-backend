@@ -1,3 +1,5 @@
+const { Model } = require('../models/user.model.js');
+
 exports.generateCrudMethods = (Model) => {
   return {
     getAll: () => Model.find().exec(),
