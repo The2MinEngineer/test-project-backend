@@ -1,13 +1,13 @@
-const { Model } = require('../models/user.model.js');
+const UserModel = require('../models/user.model.js');
 
-exports.generateCrudMethods = (Model) => {
+exports.generateCrudMethods = (UserModel) => {
   return {
-    getAll: () => Model.find().exec(),
-    getById: (id) => Model.findById(id).exec(),
-    create: (record) => Model.create(record),
+    getAll: () => UserModel.find().exec(),
+    getById: (id) => UserModel.findById(id).exec(),
+    create: (record) => UserModel.create(record),
     update: async (id, record) => {
       try {
-        const updatedRecord = await Model.findByIdAndUpdate(id, record, {
+        const updatedRecord = await UserModel.findByIdAndUpdate(id, record, {
           new: true,
         }).exec();
 
@@ -22,7 +22,7 @@ exports.generateCrudMethods = (Model) => {
     },
     delete: async (id) => {
       try {
-        const deletedRecord = await Model.findByIdAndDelete(id).exec();
+        const deletedRecord = await UserModel.findByIdAndDelete(id).exec();
 
         if (!deletedRecord) {
           throw new Error(`Record with id ${id} not found`);
