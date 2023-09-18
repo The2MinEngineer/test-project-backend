@@ -13,6 +13,20 @@ const userNotFound = (req, res, next) => {
     .json({ error: `No record with given _id : (${req.params.id})` });
 };
 
+// Create a new user
+router.post('/', async (req, res, next) => {
+  try {
+    const createdUser = await userCrud.create(req.body);
+    if (createdUser) {
+      res.status(201).json(createdUser);
+    } else {
+      res.status(400).json({ error: 'Failed to create user.' });
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
 // GET all users
 router.get('/', async (req, res, next) => {
   try {
@@ -31,20 +45,6 @@ router.get('/:id', validateDbId, async (req, res, next) => {
       res.send(data);
     } else {
       userNotFound(req, res);
-    }
-  } catch (err) {
-    next(err);
-  }
-});
-
-// Create a new user
-router.post('/', async (req, res, next) => {
-  try {
-    const createdUser = await userCrud.create(req.body);
-    if (createdUser) {
-      res.status(201).json(createdUser);
-    } else {
-      res.status(400).json({ error: 'Failed to create user.' });
     }
   } catch (err) {
     next(err);
